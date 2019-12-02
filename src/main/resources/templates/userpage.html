@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>UserPage</title>
+</head>
+<body>
+
+<p> <a th:href="@{/youtube}">YOUTUBE</a></p>
+<p> <a th:href="@{/facebook}">FACEBOOK</a></p>
+<p> <a th:href="@{/instagram}">INSTAGRAM</a></p>
+<p> <a th:href="@{/vk}">VK</a></p>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+</body>
+</html>

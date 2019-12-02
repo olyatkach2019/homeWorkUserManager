@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml"
+      xmlns:tdth="http://java.sun.com/JSP/Page">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+<h1>User manager</h1>
+
+
+<table border="1">
+    <tr>
+        <th>UserName</th>
+        <th>YouTube</th>
+        <th>VK</th>
+        <th>Instagram</th>
+        <th>Facebook</th>
+        <th></th>
+    </tr>
+
+    <th:block th:each="user : ${allusers}">
+        <th:block th:each="privilege : user.privileges">
+        <form th:action="@{/update/{id}(id=${user.id})}" th:object="${user}" method="post">
+            <tr>
+                <td th:text="${user.username}"></td>
+                <td><input type="checkbox" value="PRIVILEGE_YOUTUBE" th:field="*{privileges}"  th:name="YouTube"
+                           th:checked="${#sets.contains(user.privileges, T(com.example.homeWorkUserManager.model.Privileges).PRIVILEGE_YOUTUBE)}"/>
+                </td>
+                <td><input type="checkbox" value="PRIVILEGE_VK" th:field="*{privileges}"  th:name="VK"
+                           th:checked="${#sets.contains(user.privileges,T(com.example.homeWorkUserManager.model.Privileges).PRIVILEGE_VK)}"/>
+                </td>
+                <td><input type="checkbox" value="PRIVILEGE_INSTAGRAM" th:field="*{privileges}"  th:name="Instagram"
+                           th:checked="${#sets.contains(user.privileges,T(com.example.homeWorkUserManager.model.Privileges).PRIVILEGE_INSTAGRAM)}"/>
+                </td>
+                <td><input type="checkbox" value="PRIVILEGE_FACEBOOK" th:field="*{privileges}" th:name="Facebook"
+                           th:checked="${#sets.contains(user.privileges,T(com.example.homeWorkUserManager.model.Privileges).PRIVILEGE_FACEBOOK)}"/>
+                </td>
+                <td><input type="submit" value="SAVE"/></td>
+            </tr>
+        </form>
+        </th:block>
+    </th:block>
+</table>
+
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+</body>
+</html>
