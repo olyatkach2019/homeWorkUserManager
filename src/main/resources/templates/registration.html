@@ -10,7 +10,7 @@
     Try again.
 </div>
 
-<form method="POST" th:action="@{/register}" id="registerForm" >
+<form method="POST" th:action="@{/register}" id="registerForm">
 
     <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
     <label>Username:</label>

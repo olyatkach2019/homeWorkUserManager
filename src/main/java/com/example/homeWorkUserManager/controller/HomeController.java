@@ -1,5 +1,6 @@
 package com.example.homeWorkUserManager.controller;
 
+import com.example.homeWorkUserManager.model.Privileges;
 import com.example.homeWorkUserManager.model.Role;
 import com.example.homeWorkUserManager.model.User;
 import com.example.homeWorkUserManager.repositoty.UserRepository;
@@ -8,6 +9,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+import java.util.List;
 
 
 @Controller
@@ -66,13 +70,45 @@ public class HomeController {
     @RequestMapping(value = "/redirectPage", method = {RequestMethod.GET, RequestMethod.POST})
     public String redirect(Model model){
         if(SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains(Role.ROLE_ADMIN)) {
+            model.addAttribute("user", new User());
             model.addAttribute("allusers", userService.getAllUsers());
+
+//            List<UserPriviledge> userPriviledges = new ArrayList<>();
+//
+//            for ( User u : userService.getAllUsers()){
+//                userPriviledges.add(new UserPriviledge(u.getId(), u.getPrivileges()))    ;
+//            }
+//            model.addAttribute("userPriviledges",userPriviledges);
+
             return "usermanager";
         }
         return "userpage";
     }
 
-//    @RequestMapping(value = "/usermanager", method = RequestMethod.POST)
+//    @RequestMapping(value= "/update/{id}", method = {RequestMethod.GET, RequestMethod.POST})
+//    public String editapl(@PathVariable("id") Long id, Model model ) {
+//        model.addAttribute("user", userService.findUsersById(id));
+//        return  "login";
+//    }
+
+
+    @PostMapping(value= "/update/{id}")
+    public String updateUser(@PathVariable("id") User user){
+
+        userRepository.save(user);
+
+        return "login";
+    }
+
+    @RequestMapping(value = "/", method = {RequestMethod.GET, RequestMethod.POST})
+    public String display( Model model) {
+        List<Privileges> privileges = Arrays.asList(Privileges.values());
+        model.addAttribute("privileges",privileges);
+        return "login";
+    }
+
+
+//
 //    public  String authorisedPages(){
 //        if(SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains(Privileges.PRIVILEGE_FACEBOOK))
 //            return "facebook";
@@ -85,11 +121,7 @@ public class HomeController {
 //        return "userpage";
 //    }
 
-    @PostMapping("/update/{id}")
-    public String save(@PathVariable (value="id") User user){
 
-            return "login";
-    }
 
 
 

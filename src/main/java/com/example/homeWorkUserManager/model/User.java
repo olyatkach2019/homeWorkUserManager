@@ -2,7 +2,6 @@ package com.example.homeWorkUserManager.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -10,7 +9,7 @@ import java.util.Set;
 @Entity
 @Table(name = "T_USER")
 @Data
-@NoArgsConstructor
+//@NoArgsConstructor
 @AllArgsConstructor
 public class User {
     @Id
@@ -30,6 +29,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Set<Privileges> privileges;
 
+    public User() {
+    }
+
     public User(String username, String password) {
         this(username, password, Role.ROLE_USER);
     }
@@ -39,6 +41,7 @@ public class User {
         this.password = password;
         this.role = role;
     }
+
 
     public String getUsername() {
         return username;
@@ -54,5 +57,24 @@ public class User {
 
     public Long getId() {
         return id;
+    }
+
+    public Set<Privileges> getPrivileges() {
+        return privileges;
+    }
+
+    public void setPrivileges(Set<Privileges> privileges) {
+        this.privileges = privileges;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                ", privileges=" + privileges +
+                '}';
     }
 }
